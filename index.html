@@ -173,6 +173,7 @@ nav {
 }
 .node-card:hover { border-color: var(--teal); background: #f0fafa; }
 .node-card.expanded { border-color: var(--teal); background: #e6f7f7; }
+.node-card-top { display: flex; align-items: center; gap: 10px; }
 .node-avatar {
   width: 34px; height: 34px; border-radius: 50%; background: var(--teal);
   display: flex; align-items: center; justify-content: center;
@@ -331,7 +332,10 @@ footer {
   .form-row { flex-direction: column; }
   .node-actions { flex-wrap: wrap; }
   .dev-cards { flex-direction: column; }
-  .hero-content h1 { font-size: 42px; }
+  .hero-content h1 { font-size: 7vw; }
+  .tree-root ul { margin-left: 12px; padding-left: 10px; }
+  .node-btn { padding: 6px 10px; font-size: 12px; }
+  .stat-value { font-size: 22px; }
 }
 </style>
 </head>
@@ -764,18 +768,20 @@ function buildNodeCard(m, isTop) {
   var roleLabel = effRole === 'mentor' ? 'Mentor' : (effRole === 'both' ? 'Mentor & Mentee' : 'Mentee');
   var toggleHTML = hasChildren ? '<span class="node-toggle' + (isExpanded ? ' open' : '') + '">&#9654;</span>' : '<span style="width:16px;display:inline-block"></span>';
   var safeName = m.name.replace(/\'/g, '');
-  card.innerHTML = '<div class="' + avClass + '">' + initials(m.name) + '</div>'
+  card.innerHTML = '<div class="node-card-top">'
+    + '<div class="' + avClass + '">' + initials(m.name) + '</div>'
     + '<div class="node-info">'
     + '<div class="node-name">' + m.name + '</div>'
     + '<span class="node-role ' + roleClass + '">' + roleLabel + '</span>'
     + (count > 0 ? '<div class="node-count">' + count + ' mentee' + (count !== 1 ? 's' : '') + '</div>' : '')
     + '</div>'
+    + toggleHTML
+    + '</div>'
     + '<div class="node-actions">'
     + '<button class="node-btn" onclick="openAddMenteeModal(\'' + m.id + '\',\'' + safeName + '\');event.stopPropagation()">+ Mentee</button>'
     + '<button class="node-btn" onclick="openEditModal(\'' + m.id + '\');event.stopPropagation()">Edit</button>'
     + '<button class="node-btn danger" onclick="openDeleteModal(\'' + m.id + '\',\'' + safeName + '\');event.stopPropagation()">Remove</button>'
-    + '</div>'
-    + toggleHTML;
+    + '</div>';
   card.addEventListener('click', (function(mid) { return function() { toggleNode(mid); }; })(m.id));
   return card;
 }
