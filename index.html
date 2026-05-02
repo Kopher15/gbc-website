@@ -560,6 +560,7 @@ footer {
 var DEFAULT_PIN = '1234';
 var LS_PIN = 'gbc_admin_pin';
 var LS_API = 'gbc_api_url';
+var HARDCODED_API_URL = 'https://script.google.com/macros/s/AKfycbxAsUgy9nvrs3flFVzU02Q42ZOLVXvqSJ-buRxlOlLwbtcpGSJCzOqjEO9oe25JNUbKIg/exec';
 var LS_HERO = 'gbc_hero_img';
 var SHEET_ID = '1MH8nobmyy3OHuqmgYjWZ_vHcbLQEncXjbrvNJ3vKGiI';
 var members = [];
@@ -569,7 +570,7 @@ var deletingId = null;
 var addMenteeForId = null;
 
 function getPin() { return localStorage.getItem(LS_PIN) || DEFAULT_PIN; }
-function getApiUrl() { return localStorage.getItem(LS_API) || ''; }
+function getApiUrl() { return localStorage.getItem(LS_API) || HARDCODED_API_URL; }
 
 function initials(name) {
   var parts = name.trim().split(' ');
@@ -990,11 +991,6 @@ function handlePinChange() {
 (function init() {
   var savedImg = localStorage.getItem(LS_HERO);
   if (savedImg) document.getElementById('heroBgImg').src = savedImg;
-  var savedApi = getApiUrl();
-  if (savedApi) {
-    document.getElementById('devApiUrl').value = savedApi;
-    document.getElementById('apiUrlDisplay').textContent = savedApi;
-  }
 })();
 </script>
 </body>
